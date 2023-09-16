@@ -1,0 +1,36 @@
+<!-- item_route.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Название маршрута -->
+    <TextView
+        android:id="@+id/textRouteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название маршрута"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Краткое описание маршрута -->
+    <TextView
+        android:id="@+id/textRouteDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Краткое описание маршрута"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Средний рейтинг маршрута -->
+    <RatingBar
+        android:id="@+id/ratingRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CustomRatingBar"
+        android:layout_marginTop="4dp"/>
+
+</LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/background_light"
+    tools:context=".RouteDetailActivity">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        tools:context=".MapsActivity">
+
+    </fragment>
+    <TextView
+        android:id="@+id/textRouteTitleDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="Название маршрута" />
+
+    <RatingBar
+        android:id="@+id/ratingRouteDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CustomRatingBar"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textRouteDescriptionDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:text="Описание маршрута здесь. Очень интересное описание для тестирования." />
+
+    <TextView
+        android:id="@+id/textRouteAddressDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:text="Адрес маршрута: Улица, Дом" />
+
+    <TextView
+        android:id="@+id/textRoutePhoneDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:text="Телефон: +7 (123) 456-7890" />
+
+    <Button
+        android:id="@+id/buttonStartRoute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Начать маршрут"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
