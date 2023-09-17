@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +24,16 @@ public class RouteListActivity extends AppCompatActivity {
 
         routslistView = findViewById(R.id.routslistView);
 
-        // Создаем список маршрутов
+
+        //Изменить и брать с бека
         List<Route> routeList = new ArrayList<>();
-        routeList.add(new Route("Маршрут 1", "Описание маршрута 1", 4.5f));
-        routeList.add(new Route("Маршрут 2", "Описание маршрута 2", 4.0f));
+        // Создаем список маршрутов
+
+        Route krepostnayaStena = new Route("Крепостная стена", "Маршрут вдоль Смоленской крепостной стены", 4.2f, "123321");
+
+        routeList.add(krepostnayaStena);
+
+
         // Добавьте здесь больше маршрутов по вашему усмотрению
 
         routeAdapter = new RouteAdapter(this, routeList);

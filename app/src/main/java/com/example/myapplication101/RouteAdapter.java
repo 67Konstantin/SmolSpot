@@ -50,16 +50,24 @@ public class RouteAdapter extends BaseAdapter {
         TextView descriptionTextView = convertView.findViewById(R.id.textRouteDescription);
         RatingBar ratingBar = convertView.findViewById(R.id.ratingRoute);
 
-        titleTextView.setText(route.getTitle());
-        descriptionTextView.setText(route.getDescription());
-        ratingBar.setRating(route.getRating());
+        String routeTitle = route.getTitle();
+        String routeDescription = route.getDescription();
+        float routeRating = route.getRating();
+
+
+        titleTextView.setText(routeTitle);
+        descriptionTextView.setText(routeDescription);
+        ratingBar.setRating(routeRating);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String routeId = route.getId(); // Предполагая, что у вашего объекта Route есть метод getId() для получения идентификатора
                 Intent intent = new Intent(context, RouteDetailActivity.class);
-                intent.putExtra("id", routeId);
+                intent.putExtra("title", routeTitle);
+                intent.putExtra("description", routeDescription);
+                intent.putExtra("id", route.getId());
+                intent.putExtra("rating", routeRating);
+
                 context.startActivity(intent);
             }
         });

@@ -29,7 +29,7 @@
     <RatingBar
         android:id="@+id/ratingRoute"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         style="@style/CustomRatingBar"
         android:layout_marginTop="4dp"/>
 

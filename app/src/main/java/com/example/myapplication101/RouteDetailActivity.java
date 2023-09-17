@@ -1,19 +1,16 @@
 package com.example.myapplication101;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
-import com.example.myapplication101.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,32 +23,62 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
 
     GoogleMap gMap;
     FrameLayout map;
-    LatLng sydney = new LatLng(-34, 151);
-    LatLng TamWorth = new LatLng(-31.083332, 150.916672);
-    LatLng NewCastle = new LatLng(-32.916668, 151.750000);
-    LatLng Brisbane = new LatLng(-27.470125, 153.021072);
-    private ArrayList<LatLng> locationArrayList;
-    @SuppressLint("MissingInflatedId")
+    private Route route;
+    String id;
+    String title, description, routePath;
+    float rating;
+    TextView tv_titleRoute, tv_descriptionRoute, tv_routePath;
+    RatingBar rb_rating;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_detail);
-        map = findViewById(R.id.map);
+        //findViewById
+        {
+            map = findViewById(R.id.map);
+            tv_titleRoute = findViewById(R.id.textRouteTitleDetail);
+            tv_descriptionRoute = findViewById(R.id.textRouteDescriptionDetail);
+            rb_rating = findViewById(R.id.ratingRouteDetail);
+            tv_routePath = findViewById(R.id.textRoutePath);
+        }
+        //getIntent
+        {
+            Intent intent = getIntent();
+            title = getIntent().getStringExtra("title");
+            description = getIntent().getStringExtra("description");
+            id = getIntent().getStringExtra("id");
+            rating = getIntent().getFloatExtra("rating", 0.0f);
+        }
+
+
+        ArrayList<LatLng> coordinates;
+        LatLng point1 = new LatLng(54.7818, 32.0401); // Координаты первой точки
+        LatLng point2 = new LatLng(54.7819, 32.0410); // Координаты второй точки
+        LatLng point3 = new LatLng(54.7820, 32.0415); // Координаты третьей точки
+        LatLng point4 = new LatLng(54.7822, 32.0420); // Координаты четвёртой точки
+
+        coordinates = new ArrayList<>();
+        coordinates.add(point1);
+        coordinates.add(point2);
+        coordinates.add(point3);
+        coordinates.add(point4);
+
+        LatLng cameraLocation = new LatLng(54.7819, 32.0412);
+        routePath = "Крепостная стена, сад Блонье, улица Ленина и Маяковского";
+        float zoom = 17f;
+        route = new Route(title, description, rating, routePath, id, coordinates, zoom, cameraLocation);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         Objects.requireNonNull(mapFragment).getMapAsync(this);
 
-        Log.d(TAG, "onCreate: map100map");
-        // in below line we are initializing our array list.
-        locationArrayList = new ArrayList<>();
+        tv_titleRoute.setText(title);
+        tv_descriptionRoute.setText(description);
+        rb_rating.setRating(rating);
+        tv_routePath.setText("Где проходит: " + route.getRoutePath());
 
-        // on below line we are adding our
-        // locations in our array list.
-        locationArrayList.add(sydney);
-        locationArrayList.add(TamWorth);
-        locationArrayList.add(NewCastle);
-        locationArrayList.add(Brisbane);
         mapFragment.getMapAsync(this);
 
     }
@@ -60,8 +87,19 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;
 
-        LatLng mapSmolensk = new LatLng(54.7818, 32.0401);
-        this.gMap.addMarker(new MarkerOptions().position(mapSmolensk).title("Marker in Smolensk"));
-        this.gMap.moveCamera(CameraUpdateFactory.newLatLng(mapSmolensk));
+
+        for (int i = 0; i < route.getCoordinates().size(); i++) {
+            LatLng coordinate = route.getCoordinates().get(i);
+            String title = String.valueOf(i + 1);
+
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(coordinate)
+                    .title(title);
+
+            gMap.addMarker(markerOptions);
+        }
+        this.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.getCameraLocation(), route.getZoom()));
+
+
     }
 }
