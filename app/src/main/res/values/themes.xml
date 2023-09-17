@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyApplication101" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/lavender</item>
         <item name="colorPrimaryVariant">@color/lavender</item>
@@ -11,13 +11,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="buttonStyle">@style/ButtonStyle_Light</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:numStars">5</item>
-        <item name="android:stepSize">0.1</item>
-        <item name="android:isIndicator">true</item>
-        <item name="android:progressTint">#FFCC01</item>
-        <item name="android:progressDrawable">@drawable/custom_ratingbar_selector</item>
+    <style name="ButtonStyle_Light">
+        <!-- Стиль кнопки для светлой темы -->
+        <item name="android:background">@color/lavender</item>
+        <!-- Другие атрибуты для светлой темы -->
     </style>
 </resources>

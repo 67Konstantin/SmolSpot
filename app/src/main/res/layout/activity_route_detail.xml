@@ -4,53 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@android:color/background_light"
     tools:context=".RouteDetailActivity">
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/map"
-        tools:context=".RouteDetailActivity">
-    </fragment>
-    <TextView
-        android:id="@+id/textRouteTitleDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent">
 
-    <RatingBar
-        android:id="@+id/ratingRouteDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/CustomRatingBar"
-        android:layout_marginTop="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textRouteDescriptionDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:id="@+id/map"
+                tools:context=".RouteDetailActivity">
+            </fragment>
+            <TextView
+                android:id="@+id/textRouteTitleDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
 
-    <TextView
-        android:id="@+id/textRoutePath"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp" />
+            <TextView
+                android:id="@+id/textRouteDescriptionDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
 
-    <Button
-        android:id="@+id/buttonStartRoute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Начать маршрут"
-        android:layout_marginTop="16dp" />
+            <TextView
+                android:id="@+id/textRoutePath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/buttonStartRoute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Начать маршрут"
+                android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/themeToggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Переключить тему" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

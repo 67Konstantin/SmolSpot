@@ -48,7 +48,7 @@ public class RouteAdapter extends BaseAdapter {
 
         TextView titleTextView = convertView.findViewById(R.id.textRouteTitle);
         TextView descriptionTextView = convertView.findViewById(R.id.textRouteDescription);
-        RatingBar ratingBar = convertView.findViewById(R.id.ratingRoute);
+        //RatingBar ratingBar = convertView.findViewById(R.id.ratingRoute);
 
         String routeTitle = route.getTitle();
         String routeDescription = route.getDescription();
@@ -57,7 +57,7 @@ public class RouteAdapter extends BaseAdapter {
 
         titleTextView.setText(routeTitle);
         descriptionTextView.setText(routeDescription);
-        ratingBar.setRating(routeRating);
+       // ratingBar.setRating(routeRating);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

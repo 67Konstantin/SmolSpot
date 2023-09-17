@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="#F3E7F7"
+        android:endColor="#CFE1F2"
+        android:type="linear"
+        android:angle="90" /> <!-- Установите угол 90 для вертикального направления -->
+</shape>
