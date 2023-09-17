@@ -1,6 +1,6 @@
 Ссылка на прототип Figma https://clck.ru/35kioS	          
  		
-Ссылка на видео https://drive.google.com/drive/folders/1NYBuxD4BTCPCILjyhHbtVcWKg9UFswuW?usp=sharing           
+Ссылка на видео и файл apk приложения    https://drive.google.com/drive/folders/1NYBuxD4BTCPCILjyhHbtVcWKg9UFswuW?usp=sharing           
   
 # SmolTour
 SmolTour - это приложение для самостоятельных экскурсий по городу Смоленск. Оно предоставляет пользователю интерактивные маршруты с описанием достопримечательностей и навигацией по городу.
