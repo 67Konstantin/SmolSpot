@@ -14,6 +14,7 @@ public class Route implements Serializable {
     private float zoom; // Значение зума карты
     private LatLng cameraLocation; // Координаты камеры
     private String routePath; // Строка для хранения информации о маршруте, где проходит маршрут
+
     public Route(String title, String description, float rating, String routePath, String id, ArrayList<LatLng> coordinates, float zoom, LatLng cameraLocation) {
         this.title = title;
         this.description = description;
@@ -63,9 +64,6 @@ public class Route implements Serializable {
     public void setRoutePath(String routePath) {
         this.routePath = routePath;
     }
-
-
-
     public float getZoom() {
         return zoom;
     }
@@ -89,10 +87,10 @@ public class Route implements Serializable {
     public String getId() {
         return id;
     }
+
     public String getRoutePath() {
         return routePath;
     }
-
 
 
     public ArrayList<LatLng> getCoordinates() {
