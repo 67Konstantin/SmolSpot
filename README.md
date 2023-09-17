@@ -1,5 +1,7 @@
 Ссылка на прототип Figma https://clck.ru/35kioS
+
 Ссылка на видео https://drive.google.com/drive/folders/1NYBuxD4BTCPCILjyhHbtVcWKg9UFswuW?usp=sharing
+
 Ссылка на мобильное приложение в каталоге RuStore:
 
 # SmolTour
