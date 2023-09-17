@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,17 +20,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.DirectionsApi;
-import com.google.maps.DirectionsApiRequest;
-import com.google.maps.GeoApiContext;
-import com.google.maps.internal.ExceptionsAllowedToRetry;
-import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.TravelMode;
-import com.google.maps.model.Unit;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpotActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -37,6 +31,9 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
     private double startLng;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private List<LatLng> routePoints;
+    private int currentPointIndex = 0;
+    boolean fr = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +45,9 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
         startLat = intent.getDoubleExtra("startLat", 0.0);
         startLng = intent.getDoubleExtra("startLng", 0.0);
 
+        // Получение списка координат маршрута из Intent
+        routePoints = intent.getParcelableArrayListExtra("coordinates");
+
         // Инициализация карты
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
@@ -58,11 +58,23 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Проверка разрешения на доступ к местоположению
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Если разрешение предоставлено, выполните шаги по построению маршрута
-
         } else {
             // Если разрешение не предоставлено, запросите его
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
+
+        // Настройка кнопки для перехода к следующей точке
+        Button startNavigationButton = findViewById(R.id.startNavigationButton);
+        startNavigationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fr){
+                    fr=true;
+                    startNavigationButton.setText("Продолжить");
+                }
+                showNextPoint();
+            }
+        });
     }
 
     @Override
@@ -72,55 +84,31 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Добавление маркера на карту с координатами первой точки маршрута
         LatLng startPoint = new LatLng(startLat, startLng);
         gMap.addMarker(new MarkerOptions().position(startPoint));
-      //  buildRoute();
-        // Установка камеры на координаты первой точки
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 15f));
-
-
     }
 
-    // Метод для построения маршрута
-    // Метод для построения маршрута
-    // Метод для построения маршрута
-    private void buildRoute() {
-        // Создание объекта GeoApiContext с вашим API-ключом
-        GeoApiContext geoApiContext = new GeoApiContext.Builder()
-                .apiKey("Ваш_API_Ключ")
-                .build();
+    // Метод для отображения следующей точки маршрута
+    // Метод для очистки карты и отображения следующей точки маршрута
+    private void showNextPoint() {
+        if (currentPointIndex < routePoints.size()) {
+            // Очистка карты
+            gMap.clear();
 
-        // Создание запроса на построение маршрута
-        DirectionsApiRequest request = DirectionsApi.newRequest(geoApiContext)
-                .origin(new com.google.maps.model.LatLng(startLat, startLng))
-                .destination(new com.google.maps.model.LatLng(54.7825, 32.0430))
-                .mode(TravelMode.WALKING) // Режим перемещения (автомобиль, пешеход и т. д.)
-                .units(Unit.METRIC); // Единицы измерения расстояния и времени
+            LatLng nextLatLng = routePoints.get(currentPointIndex);
 
-        try {
-            // Выполнение запроса и получение результатов
-            DirectionsResult result = request
-                    .await();
+            // Установка маркера на следующей точке маршрута
+            gMap.addMarker(new MarkerOptions().position(nextLatLng));
 
-            // Обработка полученных результатов и отображение маршрута на карте
-            // Вам нужно добавить маркеры и линии на карту на основе данных из result.
+            // Перемещение камеры к следующей точке
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nextLatLng, 15f));
 
-            if (result != null) {
-                // Пример добавления маршрута на карту (этот код нужно настроить)
-                for (DirectionsRoute route : result.routes) {
-                    PolylineOptions polylineOptions = new PolylineOptions();
-                    for (com.google.maps.model.LatLng latLng : route.overviewPolyline.decodePath()) {
-                        LatLng point = new LatLng(latLng.lat, latLng.lng);
-                        polylineOptions.add(point);
-                    }
-                    gMap.addPolyline(polylineOptions);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Ошибка при построении маршрута.", Toast.LENGTH_SHORT).show();
+            // Увеличение индекса текущей точки
+            currentPointIndex++;
+        } else {
+            // Маршрут завершен
+            Toast.makeText(this, "Конец маршрута.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     @Override
@@ -129,7 +117,7 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Если разрешение на доступ к местоположению предоставлено, выполните шаги по построению маршрута
-                buildRoute();
+
             } else {
                 // Если разрешение не предоставлено, сообщите пользователю
                 Toast.makeText(this, "Доступ к местоположению не предоставлен.", Toast.LENGTH_SHORT).show();
