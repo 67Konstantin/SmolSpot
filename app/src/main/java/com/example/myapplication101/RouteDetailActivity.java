@@ -66,21 +66,22 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
             id = intent.getStringExtra("id");
             rating = intent.getFloatExtra("rating", 0.0f);
         }
+        ArrayList<LatLng> coordinates = new ArrayList<>();
         // Инициализация координат и других данных
         LatLng point1 = new LatLng(54.781464, 32.045201);
         LatLng point2 = new LatLng(54.780933, 32.043343);
         LatLng point3 = new LatLng(54.779637, 32.043981);
         LatLng point4 = new LatLng(54.780053, 32.043162);
 
-        ArrayList<LatLng> coordinates = new ArrayList<>();
+
         coordinates.add(point1);
         coordinates.add(point2);
         coordinates.add(point3);
         coordinates.add(point4);
 
-        LatLng cameraLocation = new LatLng(54.7819, 32.0412);
+        LatLng cameraLocation = new LatLng(54.7820, 32.0456);
         routePath = "Крепостная стена, сад Блонье, улица Ленина и Маяковского";
-        float zoom = 17f;
+        float zoom = 10f;
 
         // Создание объекта Route
         route = new Route(title, description, rating, routePath, id, coordinates, zoom, cameraLocation);

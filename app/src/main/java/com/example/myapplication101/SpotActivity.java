@@ -1,5 +1,6 @@
 package com.example.myapplication101;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -85,6 +86,14 @@ public class SpotActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng startPoint = new LatLng(startLat, startLng);
         gMap.addMarker(new MarkerOptions().position(startPoint));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 15f));
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Включение отображения текущего местоположения на карте
+            gMap.setMyLocationEnabled(true);
+
+        } else {
+            // Если разрешение не предоставлено, запросите его здесь
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
     }
 
     // Метод для отображения следующей точки маршрута

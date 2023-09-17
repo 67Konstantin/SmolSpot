@@ -26,10 +26,9 @@ public class Route implements Serializable {
         this.routePath = routePath;
     }
 
-    public Route(String title, String description, float rating, String id) {
+    public Route(String title, String description, String id) {
         this.title = title;
         this.description = description;
-        this.rating = rating;
         this.id = id;
     }
 
