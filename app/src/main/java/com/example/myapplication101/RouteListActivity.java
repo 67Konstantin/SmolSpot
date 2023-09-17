@@ -16,6 +16,7 @@ import java.util.List;
 public class RouteListActivity extends AppCompatActivity {
     private ListView routslistView;
     private RouteAdapter routeAdapter;
+    String routePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class RouteListActivity extends AppCompatActivity {
         routslistView = findViewById(R.id.routslistView);
 
 
+        routePath = "Крепостная стена, сад Блонье, улица Ленина и Маяковского";
+        float zoom = 17f;
         //Изменить и брать с бека
         List<Route> routeList = new ArrayList<>();
         // Создаем список маршрутов
