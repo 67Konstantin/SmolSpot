@@ -20,10 +20,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".RouteListActivity"
             android:exported="true"
             android:screenOrientation="portrait">

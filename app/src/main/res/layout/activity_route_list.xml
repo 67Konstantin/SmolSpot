@@ -10,9 +10,20 @@
     android:paddingBottom="16dp"
     tools:context=".RouteListActivity">
 
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Маршруты по достопримечательностям"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <ListView
         android:id="@+id/routslistView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/textViewTitle" />
 
 </RelativeLayout>

@@ -1,14 +1,20 @@
 package com.example.myapplication101;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,13 +35,14 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
     float rating;
     TextView tv_titleRoute, tv_descriptionRoute, tv_routePath;
     RatingBar rb_rating;
-
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_detail);
-        //findViewById
+
+        // findViewById
         {
             map = findViewById(R.id.map);
             tv_titleRoute = findViewById(R.id.textRouteTitleDetail);
@@ -43,23 +50,24 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
             rb_rating = findViewById(R.id.ratingRouteDetail);
             tv_routePath = findViewById(R.id.textRoutePath);
         }
-        //getIntent
+
+        // Инициализация FusedLocationProviderClient
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Получение данных из Intent
         {
             Intent intent = getIntent();
-            title = getIntent().getStringExtra("title");
-            description = getIntent().getStringExtra("description");
-            id = getIntent().getStringExtra("id");
-            rating = getIntent().getFloatExtra("rating", 0.0f);
+            title = intent.getStringExtra("title");
+            description = intent.getStringExtra("description");
+            id = intent.getStringExtra("id");
+            rating = intent.getFloatExtra("rating", 0.0f);
         }
-
-
-        ArrayList<LatLng> coordinates;
-        LatLng point1 = new LatLng(54.7818, 32.0401); // Координаты первой точки
-        LatLng point2 = new LatLng(54.7819, 32.0410); // Координаты второй точки
-        LatLng point3 = new LatLng(54.7820, 32.0415); // Координаты третьей точки
-        LatLng point4 = new LatLng(54.7822, 32.0420); // Координаты четвёртой точки
-
-        coordinates = new ArrayList<>();
+        // Инициализация координат и других данных
+        ArrayList<LatLng> coordinates = new ArrayList<>();
+        LatLng point1 = new LatLng(54.7818, 32.0401);
+        LatLng point2 = new LatLng(54.7819, 32.0410);
+        LatLng point3 = new LatLng(54.7820, 32.0415);
+        LatLng point4 = new LatLng(54.7822, 32.0420);
         coordinates.add(point1);
         coordinates.add(point2);
         coordinates.add(point3);
@@ -68,26 +76,23 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
         LatLng cameraLocation = new LatLng(54.7819, 32.0412);
         routePath = "Крепостная стена, сад Блонье, улица Ленина и Маяковского";
         float zoom = 17f;
+
+        // Создание объекта Route
         route = new Route(title, description, rating, routePath, id, coordinates, zoom, cameraLocation);
 
+        // Инициализация карты и отображение данных
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         Objects.requireNonNull(mapFragment).getMapAsync(this);
 
         tv_titleRoute.setText(title);
         tv_descriptionRoute.setText(description);
         rb_rating.setRating(rating);
         tv_routePath.setText("Где проходит: " + route.getRoutePath());
-
-        mapFragment.getMapAsync(this);
-
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;
-
-
         for (int i = 0; i < route.getCoordinates().size(); i++) {
             LatLng coordinate = route.getCoordinates().get(i);
             String title = String.valueOf(i + 1);
@@ -98,8 +103,18 @@ public class RouteDetailActivity extends AppCompatActivity implements OnMapReady
 
             gMap.addMarker(markerOptions);
         }
-        this.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.getCameraLocation(), route.getZoom()));
 
+        // Перемещение камеры на текущее местоположение
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.getCameraLocation(), route.getZoom()));
 
+        // Проверка наличия разрешения на местоположение
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Включение отображения текущего местоположения на карте
+            gMap.setMyLocationEnabled(true);
+
+        } else {
+            // Если разрешение не предоставлено, запросите его здесь
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
     }
 }

@@ -15,7 +15,7 @@
         android:layout_height="200dp"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
-        tools:context=".MapsActivity">
+        tools:context=".RouteDetailActivity">
     </fragment>
     <TextView
         android:id="@+id/textRouteTitleDetail"
